@@ -5,23 +5,23 @@ namespace Code
 {
     public class ParticleController : MonoBehaviour
     {
-        private XRGrabInteractable grabInteractable;
-        private ParticleSystem particleSystem;
+        private XRGrabInteractable _grabInteractable;
+        private ParticleSystem _particleSystem;
 
         private void Awake()
         {
-            grabInteractable = GetComponent<XRGrabInteractable>();
-            particleSystem = GetComponentInChildren<ParticleSystem>();
+            _grabInteractable = GetComponent<XRGrabInteractable>();
+            _particleSystem = GetComponentInChildren<ParticleSystem>();
         }
 
         public void StartParticleSystem(XRBaseInteractor interactor)
         {
-            particleSystem.Play();
+            _particleSystem.Play();
         }
 
         public void StopParticleSystem(XRBaseInteractor interactor)
         {
-            particleSystem.Stop();
+            _particleSystem.Stop();
         }
     }
 }

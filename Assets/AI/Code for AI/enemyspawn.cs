@@ -1,59 +1,41 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
-
-public class enemyspawn : MonoBehaviour
+namespace AI.Code_for_AI
 {
-
-    
-    public GameObject Enemy;
-
-    public Transform[] spawnPoints;
-
-    public int numberofEnemies;
-
-    public float spawnDelay;
-
-
-
-
-
-
-    // Start is called before the first frame update
-    void Start()
+    public class EnemySpawn : MonoBehaviour
     {
-        StartCoroutine Spawnenemy());
-    }
+        public GameObject enemyPrefab;
+        public Transform[] spawnPoints;
+        public int numberOfEnemies;
 
-    
+        public float spawnDelay;
 
+        // Start is called before the first frame update
+        void Start()
+        {
+            StartCoroutine(SpawnEnemies());
+        }
 
+        IEnumerator SpawnEnemies()
+        {
+            for (int i = 0; i < numberOfEnemies; i++)
+            {
+                SpawnEnemy();
+                yield return new WaitForSeconds(spawnDelay);
+            }
+        }
 
-// Update is called once per frame
-    void Update()
-    {
-       
-    }
-}
+        void SpawnEnemy()
+        {
+            int spawnIndex = Random.Range(0, spawnPoints.Length);
+            Transform spawnPoint = spawnPoints[spawnIndex];
 
-Void Spawnenemy(){
-    int spawnIndex = Random.Range(0, spawnPoints.Length);
-    Transform spawnPoints = spawnPoints[spawnIndex];
+            var position = spawnPoint.position;
+            GameObject enemy = Instantiate(enemyPrefab, position, spawnPoint.rotation);
 
-    GameObject enemy = Instantiate(Enemy, spawnPoints.position, spawnPoints.rotation);
-
-    NavMeshAgent newMeshAgent = enemy.GetComponent<NavMeshAgent>();
-    navMeshAgent.warp(spawnPoint.positon)
-}
-
-IEnumerator spawnenimies()
-{
-    for (int i = 0; i< numberofEnemies,i++)
-    {
-        Spawnenemy();
-        yield return new WaitForSeconds(spawnDelay);
+            NavMeshAgent navMeshAgent = enemy.GetComponent<NavMeshAgent>();
+            navMeshAgent.Warp(position);
+        }
     }
 }
